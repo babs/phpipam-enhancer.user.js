@@ -48,11 +48,31 @@
             httpslink.text = 'https';
             httpslink.target = '_blank';
 
+            let copylink = document.createElement('a');
+            copylink.href = 'javascript:copyToClip("'+value+'");void(0)';
+            copylink.text = 'copy';
+
             e.appendChild(document.createTextNode(' [ '));
             e.appendChild(httplink);
             e.appendChild(document.createTextNode(' | '));
             e.appendChild(httpslink);
+            e.appendChild(document.createTextNode(' | '));
+            e.appendChild(copylink);
             e.appendChild(document.createTextNode(' ] '));
         }
     });
+    let script_elem = document.createElement('script');
+    script_elem.text = `
+            function copyToClip(str) {
+                function listener(e) {
+                  e.clipboardData.setData("text/html", str);
+                  e.clipboardData.setData("text/plain", str);
+                  e.preventDefault();
+                }
+                document.addEventListener("copy", listener);
+                document.execCommand("copy");
+                document.removeEventListener("copy", listener);
+              };
+`
+    document.body.appendChild(script_elem);
 })();
