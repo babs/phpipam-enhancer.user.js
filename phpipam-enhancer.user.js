@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name         phpipam-enhancer
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
+// @downloadURL  https://gist.github.com/babs/0dcd4ca7e5eb495191caf8a28b9ffb7c/raw/phpipam-enhancer.user.js
+// @updateURL    https://gist.github.com/babs/0dcd4ca7e5eb495191caf8a28b9ffb7c/raw/phpipam-enhancer.user.js
 // @description  Enhance phpipam subnet view by adding http and https links to ips and hostnames
 // @author       Damien Degois
 // @match        http://*/subnets/*
