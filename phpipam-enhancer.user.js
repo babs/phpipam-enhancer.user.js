@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         phpipam-enhancer
 // @namespace    https://gist.github.com/babs/0dcd4ca7e5eb495191caf8a28b9ffb7c
-// @version      0.3
+// @version      0.5
 // @downloadURL  https://gist.github.com/babs/0dcd4ca7e5eb495191caf8a28b9ffb7c/raw/phpipam-enhancer.user.js
 // @updateURL    https://gist.github.com/babs/0dcd4ca7e5eb495191caf8a28b9ffb7c/raw/phpipam-enhancer.user.js
 // @description  Enhance phpipam subnet view by adding http and https links to ips and hostnames
 // @author       Damien Degois
-// @match        http://*/subnets/*
-// @match        https://*/subnets/*
+// @match        http*://*/subnets/*
+// @match        http*://*/tools/search/*
 // @grant        none
 // ==/UserScript==
 
@@ -16,23 +16,37 @@
 
     var enhancements = [
         {
-            'class': 'hostname',
+            'query': '[class=hostname]',
             'valueidx': 0,
             'check_cb': (e) => {
                 return e.childNodes.length != 1 || e.childNodes[0].nodeType != XMLDocument.TEXT_NODE;
             }
         },
         {
-            'class': 'ipaddress',
+            'query': '[class=ipaddress]',
             'valueidx': 1,
             'check_cb': (e) => {
                 return e.childNodes.length < 2 || e.childNodes[1].tagName != 'A';
             }
         },
+        {
+            'query': '[class=ip]',
+            'valueidx': 0,
+            'check_cb': (e) => {
+                return e.childNodes.length < 1 || e.childNodes[0].tagName != 'A';
+            }
+        },
+        {
+            'query': 'tr[class=ipSearch]>:nth-child(3)',
+            'valueidx': 0,
+            'check_cb': (e) => {
+                return e.childNodes.length < 1 || e.childNodes[0].nodeType != XMLDocument.TEXT_NODE;
+            }
+        },
     ]
 
     enhancements.forEach( enh => {
-        for (let e of document.getElementsByClassName(enh.class)) {
+        for (let e of document.querySelectorAll(enh.query)) {
             if (enh.check_cb(e)) {
                 continue;
             }
