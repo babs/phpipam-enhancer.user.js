@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         phpipam-enhancer
-// @namespace    https://gist.github.com/babs/0dcd4ca7e5eb495191caf8a28b9ffb7c
-// @version      0.6
-// @downloadURL  https://gist.github.com/babs/0dcd4ca7e5eb495191caf8a28b9ffb7c/raw/phpipam-enhancer.user.js
-// @updateURL    https://gist.github.com/babs/0dcd4ca7e5eb495191caf8a28b9ffb7c/raw/phpipam-enhancer.user.js
+// @namespace    https://github.com/babs/phpipam-enhancer.user.js
+// @version      0.7
+// @downloadURL  https://github.com/babs/phpipam-enhancer.user.js/raw/main/phpipam-enhancer.user.js
+// @updateURL    https://github.com/babs/phpipam-enhancer.user.js/raw/main/phpipam-enhancer.user.js
 // @description  Enhance phpipam subnet view by adding http and https links to ips and hostnames
 // @author       Damien Degois
 // @match        http*://*/subnets/*
@@ -19,7 +19,7 @@
             'query': '[class*=hostname]',
             'valueidx': 0,
             'check_cb': (e) => {
-                return e.childNodes.length != 1 || e.childNodes[0].nodeType != XMLDocument.TEXT_NODE;
+                return e.childNodes.length < 1 || e.childNodes[0].nodeType != XMLDocument.TEXT_NODE;
             }
         },
         {
@@ -68,13 +68,13 @@
             copylink.href = 'javascript:copyToClip("'+value+'");void(0)';
             copylink.text = 'copy';
 
-            e.appendChild(document.createTextNode(' [ '));
+            e.appendChild(document.createTextNode(' [\u00A0'));
             e.appendChild(httplink);
-            e.appendChild(document.createTextNode(' | '));
+            e.appendChild(document.createTextNode('\u00A0|\u00A0'));
             e.appendChild(httpslink);
-            e.appendChild(document.createTextNode(' | '));
+            e.appendChild(document.createTextNode('\u00A0|\u00A0'));
             e.appendChild(copylink);
-            e.appendChild(document.createTextNode(' ] '));
+            e.appendChild(document.createTextNode('\u00A0] '));
         }
     });
     let script_elem = document.createElement('script');
